@@ -5,7 +5,7 @@ type Variants = "primary" | "secondary";
 
 type Sizes = "sm" | "md" | "lg";
 
-const defaultStyles = "px-4 py-2 rounded-md font-light flex items-center gap-2";
+const defaultStyles = "px-4 py-2 rounded-md font-light flex items-center gap-2 cursor-pointer";
 
 interface ButtonProps {
     variant: Variants,

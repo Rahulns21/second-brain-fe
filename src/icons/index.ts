@@ -10,5 +10,11 @@ export const iconSizeVariants = {
     lg: "size-6"
 }
 
+export interface IconSizeProps {
+    fill?: string;
+    height: number;
+    width: number;
+}
+
 export { PlusIcon } from "./PlusIcon";
 export { ShareIcon } from "./ShareIcon";

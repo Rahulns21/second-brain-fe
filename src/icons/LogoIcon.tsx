@@ -1,10 +1,6 @@
-interface BrainIconProps{
-  fill?: string;
-  height: number;
-  width: number;
-}
+import type { IconSizeProps } from ".";
 
-export const BrainIcon = (props: BrainIconProps) => {
+export const BrainIcon = (props: IconSizeProps) => {
   return (
     <svg
       fill={props.fill || "var(--color-purple-600)"}
@@ -17,7 +13,6 @@ export const BrainIcon = (props: BrainIconProps) => {
       viewBox="0 0 463 463"
       xmlSpace="preserve"
       stroke={props.fill}
-      className={`${props.height} ${props.width}`}
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>

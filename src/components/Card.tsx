@@ -21,8 +21,8 @@ export function Card(props: CardProps) {
                         {props.type === "youtube" && <YoutubeIcon />}
                         {props.type === "twitter" && <TwitterIcon />}
                     </div>
-                    <div>
-                        {props.title}
+                    <div className="font-medium">
+                        {props.title.toSentenceCase()}
                     </div>
                 </div>
 

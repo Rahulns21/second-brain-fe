@@ -5,7 +5,7 @@ type Variants = "primary" | "secondary";
 
 type Sizes = "sm" | "md" | "lg";
 
-const defaultStyles = "px-4 py-2 rounded-md font-light flex items-center gap-2 cursor-pointer";
+const defaultStyles = "px-4 py-2 rounded-md font-light flex items-center gap-2 cursor-pointer justify-center";
 
 interface ButtonProps {
     variant: Variants,
@@ -28,7 +28,7 @@ const sizeClasses = {
 };
 
 export const Button = (props: ButtonProps) => {
-    return <button className={`${defaultStyles} ${variantClasses[props.variant]} ${sizeClasses[props.size]}`}>
+    return <button className={`${defaultStyles} ${variantClasses[props.variant]} ${sizeClasses[props.size]}`} onClick={props.onClick}>
         {props.startIcon && cloneElement(props.startIcon as ReactElement<IconProps>, { size: props.size })}
         {props.text}
         {props.endIcon && cloneElement(props.endIcon as ReactElement<IconProps>, { size: props.size })}

@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { forwardRef, type ReactElement } from "react";
 
 type InputTypes = "text" | "email" | "password" | "search" | "number";
 
@@ -17,9 +17,10 @@ interface InputProps {
 
 const defaultStyle = "px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-100";
 
-export const Input = (props: InputProps) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     return <div className="relative w-full">
-        <input 
+        <input
+        ref={ref}
         type={props.type} 
         className={`${defaultStyle} ${props.customStyles || ' '}`}
         onChange={props.onChange}
@@ -38,4 +39,4 @@ export const Input = (props: InputProps) => {
             </button>
         )}
     </div>
-}
+});

@@ -29,7 +29,7 @@ function Signin() {
             password
         });
         const jwt = response.data.token;
-        localStorage.setItem("token", jwt);
+        localStorage.setItem("token", `Bearer ${jwt}`);
         navigate("/dashboard");
     }
 

@@ -1,4 +1,4 @@
-import { ADD_CONTENT_URL, SIGNIN_URL, SIGNUP_URL } from "./env";
+import { CONTENT_URL, SIGNIN_URL, SIGNUP_URL } from "./env";
 
 export const API = {
     auth: {
@@ -6,6 +6,6 @@ export const API = {
         signin: SIGNIN_URL
     },
     content: {
-        addContent: ADD_CONTENT_URL
+        contentUrl: CONTENT_URL,
     }
 }

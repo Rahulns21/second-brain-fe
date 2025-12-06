@@ -34,7 +34,7 @@ export function CreateContentModal(props: CreateContentProps) {
         const title = titleRef.current?.value;
         const link = linkRef.current?.value;
 
-        await axios.post(API.content.addContent, {
+        await axios.post(API.content.contentUrl, {
             title,
             link,
             type
@@ -43,7 +43,14 @@ export function CreateContentModal(props: CreateContentProps) {
                 "Authorization": localStorage.getItem("token")
             }
         });
-        alert("Content added successfully");
+
+        // Reset form
+        setTitle("");
+        setLink("");
+        setType(undefined);
+
+        // Close modal
+        props.onClose?.();
     }
 
     return <div>

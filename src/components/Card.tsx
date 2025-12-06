@@ -1,9 +1,10 @@
-import { ShareIcon } from "../icons";
+import { useYoutubeUrl } from "../hooks/useYoutubeUrl";
+import { OpenIcon } from "../icons/OpenIcon";
 import { TrashIcon } from "../icons/TrashIcon";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { YoutubeIcon } from "../icons/YoutubeIcon";
 
-type ContentType = "twitter" | "youtube";
+export type ContentType = "twitter" | "youtube";
 
 interface CardProps {
     title: string;
@@ -12,6 +13,8 @@ interface CardProps {
 }
 
 export function Card(props: CardProps) {
+    const youtubeEmbedUrl = useYoutubeUrl(props.link);
+
     return <div className="px-8 py-4 bg-white rounded-md 
     border-gray-outline max-w-96 border">
         <div className="flex flex-col gap-4">
@@ -29,7 +32,7 @@ export function Card(props: CardProps) {
                 <div className="flex items-center gap-2">
                     <div className="pr-2 text-gray-icon cursor-pointer">
                         <a href={props.link} target="_blank">
-                            <ShareIcon />
+                            <OpenIcon />
                         </a>
                     </div>
                     <div className="text-gray-icon cursor-pointer">
@@ -40,7 +43,7 @@ export function Card(props: CardProps) {
 
             <div className="w-full text-white">
 
-                {props.type === "youtube" && <iframe className="w-full" src={props.link.replace("watch", "embed").replace("?v=", "/")} title="YouTube video player" 
+                {props.type === "youtube" && <iframe className="w-full" src={youtubeEmbedUrl} title="YouTube video player" 
                 frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>}
 

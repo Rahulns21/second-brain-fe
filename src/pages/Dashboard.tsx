@@ -5,6 +5,7 @@ import { CreateContentModal } from "../components/CreateContentModal";
 import { PlusIcon, ShareIcon } from "../icons";
 import { Sidebar } from "../components/Sidebar";
 import { useContent } from "../hooks/useContent";
+import { useSearchParams } from "react-router-dom";
 
 interface ContentProps {
     type: ContentType;
@@ -14,12 +15,31 @@ interface ContentProps {
 
 function Dashboard() {
     const [modalOpen, setModalOpen] = useState(false);
+    const [searchParams] = useSearchParams();
+    const activeFilter = searchParams.get('filter') as ContentType | null;
+
     const {contents, refresh} = useContent();
 
     useEffect(() => {
         refresh();
     }, [modalOpen]);
 
+    // Filter contents based on URL parameter
+    const filteredContents = activeFilter
+        ? contents.filter((c: ContentProps) => c.type === activeFilter)
+        : contents;
+
+    // Dynamic title based on filter
+    const getTitle = () => {
+        if (activeFilter === "twitter")
+            return "Twitter Posts";
+
+        if (activeFilter === "youtube")
+            return "YouTube Posts";
+
+        return "All Notes";
+    }
+    
     return (
         <div className="bg-gray-background min-h-screen ">
             <div>
@@ -32,7 +52,7 @@ function Dashboard() {
 
                 <div className="flex items-center justify-between w-full px-2">
                     <div className="text-2xl font-semibold p-4">
-                        All Notes
+                        {getTitle()}
                     </div>
 
                     <div className="flex items-center gap-2 p-8">
@@ -50,7 +70,7 @@ function Dashboard() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-4 gap-4 py-2">
-                            {contents.map((props: ContentProps) => (
+                            {filteredContents.map((props: ContentProps) => (
                                 <Card
                                     key={props.link}
                                     type={props.type}

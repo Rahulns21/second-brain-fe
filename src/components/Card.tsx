@@ -1,3 +1,4 @@
+import { useDeleteContent } from "../hooks/useDeleteContent";
 import { useYoutubeUrl } from "../hooks/useYoutubeUrl";
 import { OpenIcon } from "../icons/OpenIcon";
 import { TrashIcon } from "../icons/TrashIcon";
@@ -9,11 +10,25 @@ export type ContentType = "twitter" | "youtube";
 interface CardProps {
     title: string;
     link: string;
-    type: ContentType
+    type: ContentType;
+    contentId: string;
+    onDelete?: () => void;
 }
 
 export function Card(props: CardProps) {
     const youtubeEmbedUrl = useYoutubeUrl(props.link);
+    const { deleteContent } = useDeleteContent();
+
+    const handleDelete = async () => {
+        if (window.confirm("Are you sure you want to delete this content?")) {
+            try {
+                await deleteContent(props.contentId);
+                props.onDelete?.(); // Call refresh if provided
+            } catch (error) {
+                alert("Failed to delete content");
+            }
+        }
+    }
 
     return <div className="px-8 py-4 bg-white rounded-md 
     border-gray-outline max-w-96 border">
@@ -35,7 +50,7 @@ export function Card(props: CardProps) {
                             <OpenIcon />
                         </a>
                     </div>
-                    <div className="text-gray-icon cursor-pointer">
+                    <div className="text-gray-icon cursor-pointer" onClick={handleDelete}>
                         <TrashIcon />
                     </div>
                 </div>

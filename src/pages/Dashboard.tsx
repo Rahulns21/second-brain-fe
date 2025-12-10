@@ -8,9 +8,11 @@ import { useContent } from "../hooks/useContent";
 import { useSearchParams } from "react-router-dom";
 
 interface ContentProps {
+    _id: string;
     type: ContentType;
     link: string;
     title: string;
+    contentId: string;
 }
 
 function Dashboard() {
@@ -19,6 +21,10 @@ function Dashboard() {
     const activeFilter = searchParams.get('filter') as ContentType | null;
 
     const {contents, refresh} = useContent();
+
+    useEffect(() => {
+        console.table(contents);
+    },[contents]);
 
     useEffect(() => {
         refresh();
@@ -76,6 +82,8 @@ function Dashboard() {
                                     type={props.type}
                                     link={props.link}
                                     title={props.title}
+                                    contentId={props._id}
+                                    onDelete={() => refresh()}
                                 />
                             ))}
                         </div>

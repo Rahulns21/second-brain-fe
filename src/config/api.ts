@@ -1,4 +1,4 @@
-import { CONTENT_URL, SIGNIN_URL, SIGNUP_URL } from "./env";
+import { CONTENT_URL, SHARE_URL, SIGNIN_URL, SIGNUP_URL } from "./env";
 
 export const API = {
     auth: {
@@ -7,5 +7,9 @@ export const API = {
     },
     content: {
         contentUrl: CONTENT_URL,
+    },
+    brain: {
+        shareUrl: SHARE_URL,
+        viewUrl: (hash: string) => `${API.brain.viewUrl}/${hash}`
     }
 }

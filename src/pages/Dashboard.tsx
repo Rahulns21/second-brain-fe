@@ -6,6 +6,8 @@ import { PlusIcon, ShareIcon } from "../icons";
 import { Sidebar } from "../components/Sidebar";
 import { useContent } from "../hooks/useContent";
 import { useSearchParams } from "react-router-dom";
+import { useShareBrain } from "../hooks/useShareBrain";
+import toast from "react-hot-toast";
 
 interface ContentProps {
     _id: string;
@@ -19,12 +21,9 @@ function Dashboard() {
     const [modalOpen, setModalOpen] = useState(false);
     const [searchParams] = useSearchParams();
     const activeFilter = searchParams.get('filter') as ContentType | null;
+    const { shareBrain, shareLink, loading } = useShareBrain();
 
-    const {contents, refresh} = useContent();
-
-    useEffect(() => {
-        console.table(contents);
-    },[contents]);
+    const { contents, refresh } = useContent();
 
     useEffect(() => {
         refresh();
@@ -45,7 +44,7 @@ function Dashboard() {
 
         return "All Notes";
     }
-    
+
     return (
         <div className="bg-gray-background min-h-screen ">
             <div>
@@ -62,12 +61,29 @@ function Dashboard() {
                     </div>
 
                     <div className="flex items-center gap-2 p-8">
-                        <Button variant="secondary" size="md" text="Share Brain" startIcon={<ShareIcon />} />
+                        <Button variant="secondary" size="md"
+                            text={loading ? "Working..." : shareLink ? "Unshare Brain" : "Share Brain"}
+                            startIcon={<ShareIcon />} onClick={() => shareBrain(!shareLink)} />
                         <Button variant="primary" size="md" text="Add Content" startIcon={<PlusIcon />} onClick={() => {
                             setModalOpen(true);
                         }} />
                     </div>
                 </div>
+
+                {shareLink && (
+                    <div className="mt-3 flex items-center gap-2 p-3 rounded">
+                        <span className="text-purple-600">{shareLink}</span>
+                        <button
+                            className="text-purple-600 underline cursor-pointer"
+                            onClick={() => {
+                                navigator.clipboard.writeText(shareLink);
+                                toast.success("Link copied to clipboard.");
+                            }}
+                        >
+                            Copy
+                        </button>
+                    </div>
+                )}
 
                 <div className="flex-1">
                     {contents.length === 0 ? (

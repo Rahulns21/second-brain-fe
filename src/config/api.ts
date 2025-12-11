@@ -10,6 +10,10 @@ export const API = {
     },
     brain: {
         shareUrl: SHARE_URL,
-        viewUrl: (hash: string) => `${API.brain.viewUrl}/${hash}`
+        view: (hash: string) => {
+            // safe derivation: remove a trailing '/share' if present
+            const base = typeof SHARE_URL === "string" ? SHARE_URL.replace(/\/share$/, "") : SHARE_URL;
+            return `${base}/${hash}`;
+        },
     }
 }

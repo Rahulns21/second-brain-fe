@@ -1,34 +1,18 @@
-import { useDeleteContent } from "../hooks/useDeleteContent";
 import { useYoutubeUrl } from "../hooks/useYoutubeUrl";
 import { OpenIcon } from "../icons/OpenIcon";
-import { TrashIcon } from "../icons/TrashIcon";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { YoutubeIcon } from "../icons/YoutubeIcon";
 
 export type ContentType = "twitter" | "youtube" | string;
 
-interface CardProps {
+interface SharedCardProps {
     title: string;
     link: string;
     type: ContentType;
-    contentId: string;
-    onDelete?: () => void;
 }
 
-export function Card(props: CardProps) {
+export function SharedCard(props: SharedCardProps) {
     const youtubeEmbedUrl = useYoutubeUrl(props.link);
-    const { deleteContent } = useDeleteContent();
-
-    const handleDelete = async () => {
-        if (window.confirm("Are you sure you want to delete this content?")) {
-            try {
-                await deleteContent(props.contentId);
-                props.onDelete?.(); // Call refresh if provided
-            } catch (error) {
-                alert("Failed to delete content");
-            }
-        }
-    }
 
     return <div className="px-8 py-4 bg-white rounded-md 
     border-gray-outline max-w-96 border">
@@ -49,9 +33,6 @@ export function Card(props: CardProps) {
                         <a href={props.link} target="_blank">
                             <OpenIcon />
                         </a>
-                    </div>
-                    <div className="text-gray-icon cursor-pointer" onClick={handleDelete}>
-                        <TrashIcon />
                     </div>
                 </div>
             </div>
